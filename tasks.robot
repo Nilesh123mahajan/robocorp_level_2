@@ -13,17 +13,13 @@ Library           RPA.Robocloud.Secrets
 Library           RPA.Archive
 Library           RPA.Dialogs
 
-*** Variables ***
-${GLOBAL_RETRY_AMOUNT}=    10x
-${GLOBAL_RETRY_INTERVAL}=    1s
-
 *** Tasks ***
 Order robots from RobotSpareBin Industries Inc
     [Documentation]    Order robots from RobotSpareBin Industries Inc
     Get The URL From Vault And Open The Robot Order Website
     ${orders}=    Get Orders
     FOR    ${row}    IN    @{orders}
-        Close The Annoying Modal
+        Close Model
         Fill The Form    ${row}
         Preview The Robot
         Submit The Order
@@ -58,7 +54,7 @@ Get Orders
     END
     [Return]    ${table}
 
-Close The Annoying Modal
+Close Model
     [Documentation]    Closing pop-up
     Click Button    OK
 
@@ -87,7 +83,7 @@ Preview The Robot
 
 Submit The Order
     [Documentation]    Submitting the order
-    Wait Until Keyword Succeeds    ${GLOBAL_RETRY_AMOUNT}    ${GLOBAL_RETRY_INTERVAL}    Placing The Order And Checking
+    Wait Until Keyword Succeeds    10x    1s    Placing The Order And Checking
 
 Store The Receipt As A PDF File
     [Documentation]    Storing as pdf
